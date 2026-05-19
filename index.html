@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Tutor Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 19V5C4 3.89543 4.89543 3 6 3H18C19.1046 3 20 3.89543 20 5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 7H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 11H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h1>Typing Tutor Pro</h1>
+            </div>
+            <button id="theme-toggle" aria-label="Toggle theme">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3V4M12 20V21M4 12H3M21 12H20M6.31412 6.31412L5.60701 5.60701M17.6859 17.6859L18.393 18.393M6.31412 17.6859L5.60701 18.393M17.6859 6.31412L18.393 5.60701M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </header>
+
+        <div class="layout-wrapper">
+            <aside class="sidebar glass-panel">
+                <h2>Drill Modes</h2>
+                <nav id="mode-nav">
+                    <button class="mode-btn active" data-mode="paragraph">Paragraph Drill</button>
+                    <button class="mode-btn" data-mode="word">Word Drill</button>
+                    <button class="mode-btn" data-mode="homerow">Home Row Drill</button>
+                    <button class="mode-btn" data-mode="number">Number Drill</button>
+                    <button class="mode-btn" data-mode="fallingWords">Falling Words Game</button>
+                </nav>
+            </aside>
+
+            <main>
+                <div class="stats-panel glass-panel" id="stats-panel">
+                <div class="stat-box">
+                    <span class="stat-label">WPM</span>
+                    <span class="stat-value" id="wpm">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Accuracy</span>
+                    <span class="stat-value" id="accuracy">100%</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Time</span>
+                    <span class="stat-value" id="time">60s</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Mistakes</span>
+                    <span class="stat-value" id="mistakes">0</span>
+                </div>
+            </div>
+
+            <div class="typing-container glass-panel">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <input type="text" class="hidden-input" id="hidden-input" autocomplete="off">
+                <div class="typing-text" id="typing-text">
+                    <!-- Text to be typed will be injected here -->
+                </div>
+            </div>
+
+            <div class="game-container glass-panel" id="game-container" style="display: none;">
+                <div class="game-header">
+                    <div class="game-score">Score: <span id="game-score">0</span></div>
+                    <div class="game-lives">Lives: <span id="game-lives">3</span></div>
+                </div>
+                <div class="game-area" id="game-area">
+                    <!-- Falling words injected here -->
+                </div>
+                <input type="text" class="hidden-input game-input" id="game-input" autocomplete="off" placeholder="Type falling words here...">
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="restart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M3 12L7 8M3 12L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Restart Test
+                </button>
+            </div>
+            
+            <div class="results-modal" id="results-modal">
+                <div class="modal-content glass-panel">
+                    <h2>Test Complete! 🎉</h2>
+                    <div class="final-stats">
+                        <div class="final-stat">
+                            <h3>Score / WPM</h3>
+                            <p id="final-wpm">0</p>
+                        </div>
+                        <div class="final-stat">
+                            <h3>Accuracy</h3>
+                            <p id="final-accuracy">100%</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="modal-restart-btn">Try Again</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
