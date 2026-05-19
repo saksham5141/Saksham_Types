@@ -1,0 +1,3 @@
+@echo off
+echo Starting Saksham Types Pro offline in your browser...
+start "" "%~dp0index.html"

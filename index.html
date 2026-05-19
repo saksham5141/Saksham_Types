@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saksham Types Pro - Unified Offline Typing Tutor</title>
+    <!-- Prevent flash of un-themed page -->
+    <script>
+        const savedTheme = localStorage.getItem('appTheme') || 'cyberpunk';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+    <meta name="description" content="Premium typing tutor with royal heritage, cyberpunk, and retro themes, progressive lessons, custom drills, stats dashboard, and an arcade typing game. Works 100% offline.">
+    <!-- PWA Support -->
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#38bdf8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="assets/app_logo.png">
+    <link rel="apple-touch-icon" href="assets/app_logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">
+                <img src="assets/app_logo.png" alt="Logo" class="logo-img">
+                <div class="logo-text-group">
+                    <h1 id="logo-title">SAKSHAM TYPES</h1>
+                    <span id="logo-subtitle" class="logo-subtitle">Cyberpunk</span>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <!-- Theme selection -->
+                <select id="theme-select" class="theme-dropdown" aria-label="Select Theme">
+                    <option value="cyberpunk">Cyberpunk Neon</option>
+                    <option value="palace">Royal Palace</option>
+                    <option value="retro">Retro Terminal</option>
+                </select>
+ 
+                <!-- Profile badge -->
+                <div id="user-badge-container" class="user-profile-badge d-none">
+                    <img id="user-avatar" src="assets/retro_keyboard_mascot.png" alt="Avatar" class="avatar-mini">
+                    <span id="display-username" class="username-display">Raja Typist</span>
+                    <button id="logout-btn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- LAYOUT WRAPPER -->
+        <div class="layout-wrapper">
+            
+            <!-- SIDEBAR -->
+            <aside class="sidebar glass-panel" id="sidebar-panel">
+                <div style="text-align: center; padding: 0.5rem 0;" id="mascot-container">
+                    <img id="mascot-img" src="assets/retro_keyboard_mascot.png" alt="Theme Mascot" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent); box-shadow: 0 4px 8px rgba(0,0,0,0.2); object-fit: cover;">
+                </div>
+                
+                <h2>Menu & Modes</h2>
+                <nav id="mode-nav">
+                    <button class="mode-btn active" data-mode="lessons">
+                        <span>📖</span> Progressive Lessons
+                    </button>
+                    <button class="mode-btn" data-mode="paragraph">
+                        <span>📝</span> Paragraph Drill
+                    </button>
+                    <button class="mode-btn" data-mode="word">
+                        <span>🔤</span> Word Drill
+                    </button>
+                    <button class="mode-btn" data-mode="homerow">
+                        <span>⌨️</span> Home Row Drill
+                    </button>
+                    <button class="mode-btn" data-mode="number">
+                        <span>🔢</span> Number Drill
+                    </button>
+                    <button class="mode-btn" data-mode="fallingWords">
+                        <span>🎮</span> Falling Words Game
+                    </button>
+                    <button class="mode-btn" data-mode="dashboard">
+                        <span>📊</span> Stats Dashboard
+                    </button>
+                </nav>
+
+                <div class="settings-panel">
+                    <div class="settings-row">
+                        <label>
+                            <input type="checkbox" id="sound-toggle" checked>
+                            Keyboard Audio
+                        </label>
+                    </div>
+                    <div class="settings-row">
+                        <label for="sound-type">Sound Set:</label>
+                        <select id="sound-type" class="settings-select">
+                            <option value="mechanical">Mechanical Keyboard</option>
+                            <option value="typewriter">Classic Typewriter</option>
+                            <option value="retro">8-Bit Retro</option>
+                        </select>
+                    </div>
+                    <div class="settings-row">
+                        <label for="sound-volume">Volume:</label>
+                        <input type="range" id="sound-volume" min="0" max="1" step="0.1" value="0.5" style="accent-color: var(--accent);">
+                    </div>
+                    <div class="settings-row" style="margin-top: 0.5rem;">
+                        <button id="reset-data-btn" class="btn" style="padding: 0.35rem 0.5rem; font-size: 0.75rem; border-color: var(--incorrect);">
+                            Reset All Stats
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- MAIN WORKSPACE -->
+            <main>
+                <!-- 1. AUTH GATE PANEL -->
+                <div id="auth-panel" class="auth-panel glass-panel">
+                    <div class="header-ornament" id="auth-ornament">❖</div>
+                    <h2 id="auth-title">SAKSHAM TYPES</h2>
+                    <p class="subtitle" id="auth-subtitle">Begin your typing journey</p>
+                    <form id="register-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" placeholder="Enter username..." required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter email..." required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="••••••••" required autocomplete="off">
+                        </div>
+                        <button type="submit" id="auth-submit-btn" class="btn btn-primary btn-accent" style="width:100%; justify-content:center;">
+                            ENTER ROYAL COURT
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 2. LESSONS GRID PANEL (Progressive Curriculum) -->
+                <div id="lessons-panel" class="glass-panel" style="display: none;">
+                    <div style="padding: 1.5rem; border-bottom: 1px dashed var(--glass-border);">
+                        <h2 style="font-family: var(--font-mono); color: var(--accent);">Progressive Typing Curriculum</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">Complete each drill with at least 90% accuracy to unlock the next level.</p>
+                    </div>
+                    <div class="lessons-grid" id="lessons-grid">
+                        <!-- Dynamically injected cards -->
+                    </div>
+                </div>
+
+                <!-- 3. MAIN DRILL STATS -->
+                <div id="stats-panel" class="stats-panel glass-panel" style="display: none;">
+                    <div class="stat-box">
+                        <span class="stat-label">WPM</span>
+                        <span class="stat-value" id="wpm">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Accuracy</span>
+                        <span class="stat-value" id="accuracy">100%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Time</span>
+                        <span class="stat-value" id="time">60s</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Mistakes</span>
+                        <span class="stat-value" id="mistakes">0</span>
+                    </div>
+                </div>
+
+                <!-- 4. TYPING TEXT CONTAINER -->
+                <div id="typing-container" class="typing-container glass-panel" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <input type="text" class="hidden-input" id="hidden-input" autocomplete="off" spellcheck="false">
+                    <div class="typing-text" id="typing-text">
+                        <!-- Drill characters injected here -->
+                    </div>
+                </div>
+
+                <!-- 5. GAME CONTAINER (Falling Words) -->
+                <div id="game-container" class="game-container glass-panel" style="display: none;">
+                    <div class="game-header">
+                        <div class="game-score">Score: <span id="game-score">0</span></div>
+                        <div class="game-lives">Lives: <span id="game-lives">3</span></div>
+                    </div>
+                    <div class="game-area" id="game-area">
+                        <!-- Falling words injected here -->
+                    </div>
+                    <div class="game-input-container">
+                        <input type="text" class="game-input" id="game-input" autocomplete="off" placeholder="Type falling words here...">
+                    </div>
+                </div>
+
+                <!-- 6. DASHBOARD VIEW PANEL -->
+                <div id="dashboard-panel" class="dashboard-view glass-panel" style="display: none;">
+                    <div style="border-bottom: 1px dashed var(--glass-border); padding-bottom: 1rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-mono); color: var(--accent);">Personal Typing Profile</h2>
+                    </div>
+
+                    <!-- Summary stats -->
+                    <div class="dashboard-summary-grid">
+                        <div class="summary-card glass-panel">
+                            <div class="summary-icon">🏆</div>
+                            <div class="summary-details">
+                                <h4>All-Time Max WPM</h4>
+                                <p id="alltime-max-wpm">0</p>
+                            </div>
+                        </div>
+                        <div class="summary-card glass-panel">
+                            <div class="summary-icon">📈</div>
+                            <div class="summary-details">
+                                <h4>Average WPM</h4>
+                                <p id="alltime-avg-wpm">0</p>
+                            </div>
+                        </div>
+                        <div class="summary-card glass-panel">
+                            <div class="summary-icon">🎯</div>
+                            <div class="summary-details">
+                                <h4>Average Accuracy</h4>
+                                <p id="alltime-avg-acc">100%</p>
+                            </div>
+                        </div>
+                        <div class="summary-card glass-panel">
+                            <div class="summary-icon">🏁</div>
+                            <div class="summary-details">
+                                <h4>Drills Completed</h4>
+                                <p id="alltime-completed">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- History logs -->
+                    <div class="history-section">
+                        <h3>Run History Log</h3>
+                        <div class="table-wrapper glass-panel">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date & Time</th>
+                                        <th>Drill / Lesson</th>
+                                        <th>Gross WPM</th>
+                                        <th>Net WPM</th>
+                                        <th>Accuracy</th>
+                                        <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="history-log-tbody">
+                                    <!-- History rows injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GENERAL CONTROLS -->
+                <div class="controls" id="drill-controls" style="display: none;">
+                    <button class="btn btn-primary" id="restart-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M3 12L7 8M3 12L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Restart Test
+                    </button>
+                </div>
+
+                <!-- RESULTS POPUP MODAL -->
+                <div class="results-modal" id="results-modal">
+                    <div class="modal-content glass-panel">
+                        <h2 id="modal-title">Test Complete! 🎉</h2>
+                        
+                        <div class="modal-mascot" id="modal-mascot-container">
+                            <img id="modal-mascot-img" src="assets/retro_gold_trophy.png" alt="Trophy">
+                        </div>
+
+                        <div class="final-stats">
+                            <div class="final-stat">
+                                <h3>Gross Speed</h3>
+                                <p id="final-gross-wpm">0 WPM</p>
+                            </div>
+                            <div class="final-stat">
+                                <h3>Net Speed</h3>
+                                <p id="final-net-wpm">0 WPM</p>
+                            </div>
+                            <div class="final-stat">
+                                <h3>Accuracy</h3>
+                                <p id="final-accuracy">100%</p>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn" id="modal-restart-btn">Try Again</button>
+                            <button class="btn btn-accent d-none" id="modal-next-btn">Next Lesson</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

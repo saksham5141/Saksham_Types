@@ -1,0 +1,18 @@
+{
+  "name": "Saksham Types Pro - Unified Offline Typing Tutor",
+  "short_name": "Saksham Types",
+  "description": "Premium typing tutor with royal heritage, cyberpunk, and retro themes, progressive lessons, custom drills, stats dashboard, and an arcade typing game. Works 100% offline.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#38bdf8",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/app_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
