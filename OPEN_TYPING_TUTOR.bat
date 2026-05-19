@@ -1,3 +1,0 @@
-@echo off
-echo Starting Typing Tutor directly in your browser...
-start d:\kapalfod\wwwroot\typing-tutor\index.html
